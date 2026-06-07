@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAF Snack - Oleh-Oleh Khas Bangka Belitung</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Library untuk popup cantik -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-         /* --- CSS RESET & BASE STYLES --- */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -23,10 +18,9 @@
             color: #333;
         }
 
-        /* --- HEADER --- */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 5%; /* Sedikit dikurangi agar lebih ramping */
+            background: rgba(255,255,255,0.95);
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -36,11 +30,10 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* Bagian Logo yang diperbarui */
         .logo {
-            display: flex; /* Membuat logo dan teks sejajar */
-            align-items: center; /* Sejajar secara vertikal */
-            gap: 12px; /* Jarak antara gambar dan teks */
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(90deg, #1E90FF, #FF8C00);
@@ -50,9 +43,9 @@
         }
 
         .logo-img {
-            height: 45px; /* Ukuran tinggi logo */
+            height: 45px;
             width: auto;
-            -webkit-text-fill-color: initial; /* Mencegah gambar ikut transparan karena gradien teks */
+            -webkit-text-fill-color: initial;
             object-fit: contain;
         }
 
@@ -69,13 +62,11 @@
 
         .cart-count {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -5px; right: -5px;
             background: #ff3e3e;
             color: white;
             border-radius: 50%;
-            width: 22px;
-            height: 22px;
+            width: 22px; height: 22px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,7 +75,6 @@
             border: 2px solid white;
         }
 
-        /* --- HERO SECTION --- */
         .hero {
             text-align: center;
             padding: 80px 20px;
@@ -97,7 +87,6 @@
             text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
         }
 
-        /* --- PRODUCT GRID --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -128,14 +117,9 @@
             flex-direction: column;
             border: 1px solid rgba(255,255,255,0.3);
         }
-
         .product-card:hover { transform: translateY(-10px); }
 
-        .product-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
+        .product-image { width: 100%; height: 220px; object-fit: cover; }
 
         .product-info {
             padding: 20px;
@@ -144,376 +128,755 @@
             flex-grow: 1;
         }
 
-        .product-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-
-        .product-price {
-            color: #FF8C00;
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .product-desc {
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
+        .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #2c3e50; }
+        .product-price { color: #FF8C00; font-weight: 700; font-size: 1.3rem; margin-bottom: 10px; }
+        .product-desc { font-size: 0.85rem; color: #7f8c8d; margin-bottom: 20px; line-height: 1.5; }
 
         .btn-add {
             background: linear-gradient(90deg, #1E90FF, #FF8C00);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
+            color: white; border: none; padding: 12px;
+            border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
 
-        /* --- MODAL --- */
+        /* MODAL KERANJANG */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
+            display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0,0,0,0.7);
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; align-items: center;
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background: white;
-            width: 95%;
-            max-width: 550px;
-            border-radius: 25px;
-            padding: 30px;
-            position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
+            background: white; width: 95%; max-width: 550px;
+            border-radius: 25px; padding: 30px;
+            position: relative; max-height: 85vh; overflow-y: auto;
         }
 
         .close-btn {
-            position: absolute;
-            top: 20px; right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #95a5a6;
+            position: absolute; top: 20px; right: 20px;
+            font-size: 1.5rem; cursor: pointer; color: #95a5a6;
         }
 
-        /* --- PAYMENT ELEMENTS --- */
         .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; border-bottom: 1px solid #eee;
         }
 
         .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 15px 0;
         }
 
         .payment-option {
-            padding: 12px 5px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.3s;
-            font-weight: 600;
+            padding: 12px 5px; border: 2px solid #eee; border-radius: 12px;
+            text-align: center; cursor: pointer; font-size: 0.8rem;
+            transition: 0.3s; font-weight: 600;
         }
-
-        .payment-option.active {
-            border-color: #1E90FF;
-            background: #ebf5ff;
-            color: #1E90FF;
-        }
+        .payment-option.active { border-color: #1E90FF; background: #ebf5ff; color: #1E90FF; }
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
-        .form-group input {
-            width: 100%; padding: 12px;
-            border: 1px solid #ddd; border-radius: 10px;
-        }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }
 
         .btn-pay {
-            background: #28a745;
-            color: white; border: none;
-            width: 100%; padding: 15px;
-            border-radius: 12px; font-size: 1rem;
-            font-weight: 700; cursor: pointer;
-            margin-top: 20px;
+            background: #28a745; color: white; border: none;
+            width: 100%; padding: 15px; border-radius: 12px;
+            font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 20px;
         }
 
-        /* --- LOADING OVERLAY --- */
+        /* LOADING */
         #loadingOverlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(255,255,255,0.9);
-            z-index: 3000;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(255,255,255,0.9); z-index: 3000;
+            flex-direction: column; justify-content: center; align-items: center; text-align: center;
         }
 
         .spinner {
             width: 50px; height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #1E90FF;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
+            border: 5px solid #f3f3f3; border-top: 5px solid #1E90FF;
+            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+        /* ===== BANK GATEWAY ===== */
+        #bankGatewayModal {
+            display: none; position: fixed; top:0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 5000;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .gw-wrap {
+            background: white;
+            width: 95%; max-width: 430px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            animation: gwFadeIn 0.3s ease;
+        }
+
+        @keyframes gwFadeIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+        .gw-header {
+            background: #003d7a;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gw-header-lock { font-size: 1.3rem; }
+
+        .gw-header-title { font-size: 14px; font-weight: 600; }
+        .gw-header-sub { font-size: 10px; opacity: 0.75; margin-top: 2px; }
+
+        .gw-ssl {
+            margin-left: auto;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 10px;
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .gw-body {
+            padding: 22px;
+            max-height: 72vh;
+            overflow-y: auto;
+        }
+
+        .gw-step { display: none; }
+        .gw-step.active { display: block; }
+
+        .gw-badge {
+            display: inline-block;
+            font-size: 11px; font-weight: 600;
+            padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+        }
+        .gw-badge.pending { background: #fff3cd; color: #856404; }
+        .gw-badge.success { background: #d4edda; color: #155724; }
+
+        .gw-section-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; }
+
+        .gw-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+        .gw-row:last-child { border-bottom: none; }
+        .gw-row-label { color: #777; }
+        .gw-row-val { font-weight: 600; color: #1a1a1a; font-size: 12px; }
+
+        .gw-total-box {
+            background: #eef4ff;
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin: 16px 0;
+            border: 1px solid #c9dcff;
+        }
+        .gw-total-label { font-size: 14px; font-weight: 600; color: #333; }
+        .gw-total-val { font-size: 18px; font-weight: 700; color: #003d7a; }
+
+        .gw-btn {
+            width: 100%; padding: 13px;
+            border-radius: 10px; border: none;
+            font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: 0.2s;
+        }
+        .gw-btn-primary { background: #003d7a; color: white; margin-bottom: 8px; }
+        .gw-btn-primary:hover { background: #00306b; }
+        .gw-btn-secondary {
+            background: none; color: #666;
+            border: 1px solid #ddd;
+        }
+        .gw-btn-secondary:hover { background: #f5f5f5; }
+        .gw-btn-success { background: #28a745; color: white; }
+        .gw-btn-success:hover { background: #218838; }
+
+        .gw-security-note {
+            text-align: center; font-size: 11px; color: #999;
+            margin-top: 14px; line-height: 1.6;
+        }
+
+        /* OTP */
+        .gw-otp-icon { text-align: center; font-size: 3rem; margin-bottom: 10px; }
+        .gw-otp-title { text-align: center; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .gw-otp-desc { text-align: center; font-size: 13px; color: #666; margin-bottom: 18px; line-height: 1.6; }
+
+        .otp-inputs {
+            display: flex; gap: 8px;
+            justify-content: center; margin-bottom: 14px;
+        }
+
+        .otp-inputs input {
+            width: 44px; height: 52px;
+            text-align: center; font-size: 22px; font-weight: 700;
+            border: 2px solid #ddd; border-radius: 10px;
+            transition: 0.2s; outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        .otp-inputs input:focus { border-color: #003d7a; box-shadow: 0 0 0 3px rgba(0,61,122,0.1); }
+
+        .gw-timer {
+            text-align: center; font-size: 12px; color: #666; margin-bottom: 16px;
+        }
+        .gw-timer span { font-weight: 700; color: #003d7a; }
+
+        /* Processing */
+        .gw-processing {
+            text-align: center; padding: 30px 10px;
+        }
+
+        .gw-spinner {
+            width: 52px; height: 52px;
+            border: 4px solid #e8e8e8;
+            border-top: 4px solid #003d7a;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 18px;
+        }
+
+        .gw-proc-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+        .gw-proc-sub { font-size: 12px; color: #999; line-height: 1.6; }
+
+        .gw-proc-steps {
+            margin-top: 20px; text-align: left;
+        }
+
+        .gw-proc-step {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0; font-size: 12px; color: #999;
+            border-bottom: 1px solid #f5f5f5;
+            transition: 0.4s;
+        }
+
+        .gw-proc-step.done { color: #28a745; }
+        .gw-proc-step.active-step { color: #003d7a; font-weight: 600; }
+
+        .step-dot {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #eee; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; transition: 0.4s;
+        }
+        .gw-proc-step.done .step-dot { background: #28a745; color: white; }
+        .gw-proc-step.active-step .step-dot { background: #003d7a; color: white; }
+
+        /* Sukses */
+        .gw-success-icon { text-align: center; font-size: 3.5rem; margin-bottom: 6px; }
+
+        .gw-receipt {
+            background: #f8f9fa; border-radius: 12px; padding: 16px;
+            margin: 14px 0;
+        }
+
+        .gw-receipt-row {
+            display: flex; justify-content: space-between;
+            padding: 7px 0; border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        .gw-receipt-row:last-child { border-bottom: none; }
+        .gw-receipt-label { color: #777; }
+        .gw-receipt-val { font-weight: 600; }
+        .gw-receipt-val.blue { color: #003d7a; font-size: 12px; }
+
+        .gw-success-note {
+            text-align: center; font-size: 12px; color: #666;
+            margin-bottom: 14px; line-height: 1.6;
+        }
 
         footer {
-            background: rgba(0,0,0,0.8);
-            color: white; padding: 40px 20px;
-            text-align: center; margin-top: 50px;
+            background: rgba(0,0,0,0.8); color: white;
+            padding: 40px 20px; text-align: center; margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <!-- GANTI URL_LOGO_ANDA_DI_SINI dengan link gambar logo Anda -->
-            <img src="logo daf snack.png" alt="Logo" class="logo-img">
-            DAF Snack
-        </div>
-        <div class="cart-icon" onclick="openCart()">
-            🛒 <span class="cart-count" id="cartCount">0</span>
-        </div>
-    </header>
-
-    <section class="hero">
-        <h1>Oleh-Oleh Khas Bangka Belitung</h1>
-        <p>Premium Quality, Langsung dari Kota Serumpun Sebalai.</p>
-    </section>
-
-    <div class="container">
-        <h2 class="section-title">Katalog Produk</h2>
-        <div class="product-grid" id="productContainer"></div>
+<header>
+    <div class="logo">
+        <img src="logo daf snack.png" alt="Logo" class="logo-img">
+        DAF Snack
     </div>
+    <div class="cart-icon" onclick="openCart()">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+    </div>
+</header>
 
-    <!-- MODAL KERANJANG & PEMBAYARAN -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeCart()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Checkout Pesanan</h2>
-            
-            <div id="cartItemsContainer"></div>
-            
-            <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-top: 15px;">
-                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem;">
-                    <span>Total Bayar:</span>
-                    <span style="color: #FF8C00;">Rp <span id="cartTotal">0</span></span>
+<section class="hero">
+    <h1>Oleh-Oleh Khas Bangka Belitung</h1>
+    <p>Premium Quality, Langsung dari Kota Serumpun Sebalai.</p>
+</section>
+
+<div class="container">
+    <h2 class="section-title">Katalog Produk</h2>
+    <div class="product-grid" id="productContainer"></div>
+</div>
+
+<!-- MODAL KERANJANG -->
+<div class="modal" id="cartModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeCart()">&times;</span>
+        <h2 style="margin-bottom:20px;">Checkout Pesanan</h2>
+
+        <div id="cartItemsContainer"></div>
+
+        <div style="background:#f9f9f9;padding:15px;border-radius:12px;margin-top:15px;">
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;">
+                <span>Total Bayar:</span>
+                <span style="color:#FF8C00;">Rp <span id="cartTotal">0</span></span>
+            </div>
+        </div>
+
+        <div class="payment-form">
+            <h3 style="margin-top:25px;font-size:1rem;border-bottom:2px solid #eee;padding-bottom:5px;">Informasi Pengiriman</h3>
+            <div class="form-group" style="margin-top:10px;">
+                <label>Nama Penerima</label>
+                <input type="text" id="custName" placeholder="Contoh: Budi Santoso">
+            </div>
+            <div class="form-group">
+                <label>Nomor WhatsApp</label>
+                <input type="tel" id="custPhone" placeholder="0812xxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Alamat Lengkap</label>
+                <input type="text" id="custAddress" placeholder="Nama Jalan, No Rumah, Kecamatan">
+            </div>
+
+            <h3 style="margin-top:20px;font-size:1rem;">Metode Pembayaran</h3>
+            <div class="payment-methods">
+                <div class="payment-option active" onclick="selectMethod('transfer',this)">🏦 Bank</div>
+                <div class="payment-option" onclick="selectMethod('cod',this)">🚚 COD</div>
+            </div>
+
+            <div id="methodDetail" style="background:#fff8e1;padding:10px;border-radius:8px;font-size:0.85rem;margin-bottom:10px;">
+                Transfer ke <b>BCA 123-456-7890</b> a/n DAF Snack
+            </div>
+
+            <button class="btn-pay" onclick="processRealPayment()">BAYAR SEKARANG</button>
+        </div>
+    </div>
+</div>
+
+<!-- LOADING SCREEN -->
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <h3 id="loadingText">Menghubungkan ke Server Bank...</h3>
+    <p style="color:#666;font-size:0.9rem;">Mohon jangan tutup halaman ini</p>
+</div>
+
+<!-- ===== BANK GATEWAY MODAL ===== -->
+<div id="bankGatewayModal">
+    <div class="gw-wrap">
+
+        <!-- Header -->
+        <div class="gw-header">
+            <div class="gw-header-lock">🔒</div>
+            <div>
+                <div class="gw-header-title">BCA Internet Banking</div>
+                <div class="gw-header-sub">Halaman Pembayaran Aman</div>
+            </div>
+            <div class="gw-ssl">🛡️ SSL 256-bit</div>
+        </div>
+
+        <div class="gw-body">
+
+            <!-- STEP 1: Konfirmasi Detail -->
+            <div class="gw-step active" id="gw-step1">
+                <div class="gw-badge pending">⏳ Menunggu Konfirmasi Anda</div>
+                <div class="gw-section-title">Konfirmasi Detail Pembayaran</div>
+                <div id="gwOrderDetail"></div>
+                <div class="gw-total-box">
+                    <span class="gw-total-label">Total Bayar</span>
+                    <span class="gw-total-val" id="gwTotalVal">Rp 0</span>
+                </div>
+                <button class="gw-btn gw-btn-primary" onclick="gwGoStep(2)">Lanjut Bayar →</button>
+                <button class="gw-btn gw-btn-secondary" onclick="closeBankGateway()">Batalkan Transaksi</button>
+                <div class="gw-security-note">🔐 Transaksi ini dilindungi enkripsi SSL 256-bit BCA.<br>Informasi Anda aman dan tidak akan dibagikan.</div>
+            </div>
+
+            <!-- STEP 2: OTP -->
+            <div class="gw-step" id="gw-step2">
+                <div class="gw-otp-icon">📱</div>
+                <div class="gw-otp-title">Verifikasi Kode OTP</div>
+                <div class="gw-otp-desc">Kode OTP 6 digit telah dikirimkan ke nomor<br><b id="gwMaskedPhone">****</b> melalui SMS BCA.</div>
+                <div class="otp-inputs" id="otpInputsContainer"></div>
+                <div class="gw-timer">Kode berlaku selama <span id="gwOtpTimer">04:59</span></div>
+                <button class="gw-btn gw-btn-primary" onclick="gwVerifyOtp()">Verifikasi &amp; Bayar Sekarang</button>
+                <button class="gw-btn gw-btn-secondary" onclick="gwGoStep(1)">← Kembali</button>
+                <div class="gw-security-note">Jangan berikan kode OTP kepada siapapun, termasuk pihak yang mengaku dari BCA.</div>
+            </div>
+
+            <!-- STEP 3: Processing -->
+            <div class="gw-step" id="gw-step3">
+                <div class="gw-processing">
+                    <div class="gw-spinner"></div>
+                    <div class="gw-proc-title" id="gwProcTitle">Memproses Pembayaran...</div>
+                    <div class="gw-proc-sub">Mohon jangan menutup atau me-refresh halaman ini.<br>Proses berlangsung hingga 30 detik.</div>
+                    <div class="gw-proc-steps" id="gwProcSteps">
+                        <div class="gw-proc-step" id="ps1"><div class="step-dot">1</div> Menghubungkan ke server BCA</div>
+                        <div class="gw-proc-step" id="ps2"><div class="step-dot">2</div> Memverifikasi identitas nasabah</div>
+                        <div class="gw-proc-step" id="ps3"><div class="step-dot">3</div> Memproses transfer dana</div>
+                        <div class="gw-proc-step" id="ps4"><div class="step-dot">4</div> Konfirmasi pembayaran ke merchant</div>
+                        <div class="gw-proc-step" id="ps5"><div class="step-dot">5</div> Menyimpan bukti transaksi</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="payment-form">
-                <h3 style="margin-top: 25px; font-size: 1rem; border-bottom: 2px solid #eee; padding-bottom: 5px;">Informasi Pengiriman</h3>
-                <div class="form-group" style="margin-top: 10px;">
-                    <label>Nama Penerima</label>
-                    <input type="text" id="custName" placeholder="Contoh: Budi Santoso">
-                </div>
-                <div class="form-group">
-                    <label>Nomor WhatsApp</label>
-                    <input type="tel" id="custPhone" placeholder="0812xxxxxx">
-                </div>
-                <div class="form-group">
-                    <label>Alamat Lengkap</label>
-                    <input type="text" id="custAddress" placeholder="Nama Jalan, No Rumah, Kecamatan">
-                </div>
-
-                <h3 style="margin-top: 20px; font-size: 1rem;">Metode Pembayaran</h3>
-                <div class="payment-methods">
-                    <div class="payment-option active" onclick="selectMethod('transfer', this)">🏦 Bank</div>
-                    <div class="payment-option" onclick="selectMethod('cod', this)">🚚 COD</div>
-                </div>
-
-                <div id="methodDetail" style="background: #fff8e1; padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
-                    Transfer ke <b>BCA 123-456-7890</b> a/n DAF Snack
-                </div>
-
-                <button class="btn-pay" onclick="processRealPayment()">BAYAR SEKARANG</button>
+            <!-- STEP 4: Sukses -->
+            <div class="gw-step" id="gw-step4">
+                <div class="gw-success-icon">✅</div>
+                <div class="gw-badge success" style="display:block;text-align:center;">✓ Pembayaran Berhasil Diproses</div>
+                <div class="gw-section-title" style="text-align:center;">Bukti Transaksi</div>
+                <div class="gw-receipt" id="gwReceiptDetail"></div>
+                <div class="gw-success-note">📧 Bukti pembayaran telah dikirim ke email terdaftar dan WhatsApp Anda.</div>
+                <button class="gw-btn gw-btn-success" onclick="gwFinish()">Selesai & Tutup</button>
             </div>
+
         </div>
     </div>
+</div>
 
-    <!-- LOADING SCREEN -->
-    <div id="loadingOverlay">
-        <div class="spinner"></div>
-        <h3 id="loadingText">Menghubungkan ke Server Bank...</h3>
-        <p style="color: #666; font-size: 0.9rem;">Mohon jangan tutup halaman ini</p>
-    </div>
+<footer>
+    <p>&copy; 2026 DAF Snack Bangka Belitung. Terpercaya &amp; Higienis.</p>
+</footer>
 
-    <footer>
-        <p>&copy; 2026 DAF Snack Bangka Belitung. Terpercaya & Higienis.</p>
-    </footer>
+<script>
+    const products = [
+        { id:1,  name:"Kritcu Super Bangka",    price:45000, desc:"Camilan renyah telur cumi khas Bangka.",                          img:"https://down-id.img.susercontent.com/file/1f8ce2a7d006ed601df1fe5d5ad9a0aa" },
+        { id:2,  name:"Getas Super Bangka",     price:35000, desc:"Olahan ikan tenggiri kualitas ekspor.",                          img:"https://tse2.mm.bing.net/th/id/OIP.tUeqGnpprmHOm9HiNSWsVgHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
+        { id:3,  name:"Kemplang Panggang",      price:30000, desc:"Kemplang panggang khas Bangka dengan aroma ikan yang kuat.",     img:"https://tse2.mm.bing.net/th/id/OIP.Ngh5zecQ4DXperOewQqtEgHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
+        { id:4,  name:"Kerupuk Ikan",           price:25000, desc:"Kerupuk ikan gurih renyah.",                                    img:"https://tse3.mm.bing.net/th/id/OIP.kK0cuRfYtwqy-Etm1gVYygHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
+        { id:5,  name:"Peyek Kacang",           price:55000, desc:"Peyek renyah bertabur kacang tanah pilihan.",                   img:"https://exotic.bangka.go.id/web/wp-content/uploads/2023/02/keipik-scaled.jpg" },
+        { id:6,  name:"Kemplang Koin Udang",    price:20000, desc:"Gurihnya udang dalam bentuk koin mini.",                        img:"https://img.lazcdn.com/g/ff/kf/S3d4636225c564a6a8253b0b1f01865ea7.jpg_720x720q80.jpg" },
+        { id:7,  name:"Lempok Cempedak",        price:15000, desc:"Dodol khas cempedak asli Bangka.",                              img:"https://img-global.cpcdn.com/recipes/cc6c1ebd992abc4f/1200x630cq90/photo.jpg" },
+        { id:8,  name:"Kemplang Udang Oven",    price:35000, desc:"Rendah lemak, diproses dengan oven.",                          img:"https://down-id.img.susercontent.com/file/id-11134207-7rasa-m4ylzgfrgfiw35" },
+        { id:9,  name:"Kue Rintak",             price:28000, desc:"Kue sagu tradisional manis gurih.",                             img:"https://negerilaskarpelangi.com/wp-content/uploads/2021/02/IMG-20210222-WA0028.jpg" },
+        { id:10, name:"Kacang Oven",            price:18000, desc:"Kacang tanah kupas panggang.",                                  img:"https://down-id.img.susercontent.com/file/ebf8576ffd0e9ea17d31cde8fb3a82c4" },
+        { id:11, name:"Kemplang Ampiang",       price:22000, desc:"Kemplang gepeng khas dengan rasa ikan kuat.",                  img:"https://images.tokopedia.net/img/cache/500-square/VqbcmM/2022/2/3/5026b374-de98-4258-a6ca-58be6351010a.jpg" },
+        { id:12, name:"Keripik Pisang",         price:25000, desc:"Pisang kepok pilihan renyah manis.",                           img:"https://cf.shopee.co.id/file/ad036103068353be0bd37c9e443d0308" },
+        { id:13, name:"Kue Sagon",              price:20000, desc:"Kelapa parut sangrai manis.",                                   img:"https://down-id.img.susercontent.com/file/4e80edd8d199abf87acc8a695d41fd30" },
+        { id:14, name:"Kemplang Stik Udang",    price:25000, desc:"Stik renyah rasa udang spesial.",                              img:"https://down-id.img.susercontent.com/file/c69252031cc457b0c69b89d04e578a3b" },
+        { id:15, name:"Kue Angka Delapan",      price:18000, desc:"Snack legendaris khas Bangka.",                                img:"https://down-id.img.susercontent.com/file/f6a8ced5d3a8a2583cf2ebc774f0fdae" },
+        { id:16, name:"Kue Semprong",           price:30000, desc:"Tipis, renyah, dan wangi wijen.",                              img:"https://tse3.mm.bing.net/th/id/OIP.zUdFjiBVR1CeSgoai52tDwHaE8?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
+        { id:17, name:"Keripik Ubi Pedas",      price:40000, desc:"Ubi pilihan bumbu pedas manis.",                               img:"https://i.pinimg.com/736x/c7/65/46/c765461e31a5de6dae17f56b86a390b5.jpg" },
+        { id:18, name:"Gula Kabung",            price:22000, desc:"Gula aren asli Bangka premium.",                               img:"https://down-id.img.susercontent.com/file/id-11134207-7rasg-m2je7psoyn9q58" },
+        { id:19, name:"Rusip",                  price:35000, desc:"Sambal ikan fermentasi otentik Babel.",                        img:"https://s.kaskus.id/images/2022/03/07/10926955_20220307053957.jpg" },
+        { id:20, name:"Terasi/Belacan",         price:30000, desc:"Terasi udang murni aroma sedap.",                              img:"https://down-my.img.susercontent.com/file/id-11134207-7r98o-lntrcgxuti13b2" }
+    ];
 
-    <script>
-        const products = [
-            { id: 1, name: "Kritcu Super Bangka", price: 45000, desc: "Camilan renyah telur cumi khas Bangka.", img:"https://down-id.img.susercontent.com/file/1f8ce2a7d006ed601df1fe5d5ad9a0aa" },
-            { id: 2, name: "Getas Super Bangka", price: 35000, desc: "Olahan ikan tenggiri kualitas ekspor.", img: "https://tse2.mm.bing.net/th/id/OIP.tUeqGnpprmHOm9HiNSWsVgHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
-            { id: 3, name: "Kemplang Panggang", price: 30000, desc: "Kemplang panggang khas Bangka dengan aroma ikan yang kuat dan tekstur renyah.", img: "https://tse2.mm.bing.net/th/id/OIP.Ngh5zecQ4DXperOewQqtEgHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
-            { id: 4, name: "Kerupuk Ikan", price: 25000, desc: "Kerupuk ikan gurih renyah.", img: "https://tse3.mm.bing.net/th/id/OIP.kK0cuRfYtwqy-Etm1gVYygHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
-            { id: 5, name: "Peyek Kacang", price: 55000, desc: "Peyek renyah bertabur kacang tanah pilihan.", img: "https://exotic.bangka.go.id/web/wp-content/uploads/2023/02/keipik-scaled.jpg" },
-            { id: 6, name: "Kemplang Koin Udang", price: 20000, desc: "Gurihnya udang dalam bentuk koin mini.", img: "https://img.lazcdn.com/g/ff/kf/S3d4636225c564a6a8253b0b1f01865ea7.jpg_720x720q80.jpg" },
-            { id: 7, name: "Lempok Cempedak", price: 15000, desc: "Dodol khas cempedak asli Bangka.", img: "https://img-global.cpcdn.com/recipes/cc6c1ebd992abc4f/1200x630cq90/photo.jpg" },
-            { id: 8, name: "Kemplang Udang Oven", price: 35000, desc: "Rendah lemak, diproses dengan oven.", img: "https://down-id.img.susercontent.com/file/id-11134207-7rasa-m4ylzgfrgfiw35" },
-            { id: 9, name: "Kue Rintak", price: 28000, desc: "Kue sagu tradisional manis gurih.", img: "https://negerilaskarpelangi.com/wp-content/uploads/2021/02/IMG-20210222-WA0028.jpg" },
-            { id: 10, name: "Kacang Oven", price: 18000, desc: "Kacang tanah kupas panggang.", img: "https://down-id.img.susercontent.com/file/ebf8576ffd0e9ea17d31cde8fb3a82c4" },
-            { id: 11, name: "Kemplang Ampiang", price: 22000, desc: "Kemplang gepeng khas dengan rasa ikan kuat.", img: "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2022/2/3/5026b374-de98-4258-a6ca-58be6351010a.jpg" },
-            { id: 12, name: "Keripik Pisang", price: 25000, desc: "Pisang kepok pilihan renyah manis.", img: "https://cf.shopee.co.id/file/ad036103068353be0bd37c9e443d0308" },
-            { id: 13, name: "Kue Sagon", price: 20000, desc: "Kelapa parut sangrai manis.", img: "https://down-id.img.susercontent.com/file/4e80edd8d199abf87acc8a695d41fd30" },
-            { id: 14, name: "Kemplang Stik Udang", price: 25000, desc: "Stik renyah rasa udang spesial.", img: "https://down-id.img.susercontent.com/file/c69252031cc457b0c69b89d04e578a3b" },
-            { id: 15, name: "Kue Angka Delapan", price: 18000, desc: "Snack legendaris khas Bangka.", img: "https://down-id.img.susercontent.com/file/f6a8ced5d3a8a2583cf2ebc774f0fdae" },
-            { id: 16, name: "Kue Semprong", price: 30000, desc: "Tipis, renyah, dan wangi wijen.", img: "https://tse3.mm.bing.net/th/id/OIP.zUdFjiBVR1CeSgoai52tDwHaE8?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3" },
-            { id: 17, name: "Keripik Ubi Pedas", price: 40000, desc: "Ubi pilihan bumbu pedas manis.", img: "https://i.pinimg.com/736x/c7/65/46/c765461e31a5de6dae17f56b86a390b5.jpg" },
-            { id: 18, name: "Gula Kabung", price: 22000, desc: "Gula aren asli Bangka premium.", img: "https://down-id.img.susercontent.com/file/id-11134207-7rasg-m2je7psoyn9q58" },
-            { id: 19, name: "Rusip", price: 35000, desc: "Sambal ikan fermentasi otentik Babel.", img: "https://s.kaskus.id/images/2022/03/07/10926955_20220307053957.jpg" },
-            { id: 20, name: "Terasi/Belacan", price: 30000, desc: "Terasi udang murni aroma sedap.", img: "https://down-my.img.susercontent.com/file/id-11134207-7r98o-lntrcgxuti13b2" }
-        ];
+    let cart = [];
+    let selectedMethod = 'transfer';
+    let gwOtpInterval = null;
 
-        let cart = [];
-        let selectedMethod = 'transfer';
+    /* ==================== RENDER PRODUK ==================== */
+    function renderProducts() {
+        const container = document.getElementById('productContainer');
+        container.innerHTML = products.map(p => `
+            <div class="product-card">
+                <img src="${p.img}" class="product-image" loading="lazy" onerror="this.src='https://placehold.co/400x220?text=No+Image'">
+                <div class="product-info">
+                    <div class="product-title">${p.name}</div>
+                    <div class="product-price">Rp ${formatRupiah(p.price)}</div>
+                    <div class="product-desc">${p.desc}</div>
+                    <button class="btn-add" onclick="addToCart(${p.id})">Tambah Ke Keranjang</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function renderProducts() {
-            const container = document.getElementById('productContainer');
-            container.innerHTML = products.map(p => `
-                <div class="product-card">
-                    <img src="${p.img}" class="product-image" loading="lazy">
-                    <div class="product-info">
-                        <div class="product-title">${p.name}</div>
-                        <div class="product-price">Rp ${formatRupiah(p.price)}</div>
-                        <div class="product-desc">${p.desc}</div>
-                        <button class="btn-add" onclick="addToCart(${p.id})">Tambah Ke Keranjang</button>
+    /* ==================== CART ==================== */
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        const item = cart.find(i => i.id === id);
+        if (item) item.qty++; else cart.push({...product, qty:1});
+        updateUI();
+        Swal.fire({ icon:'success', title:'Berhasil!', text: product.name + ' masuk keranjang.', timer:1000, showConfirmButton:false });
+    }
+
+    function updateUI() {
+        document.getElementById('cartCount').innerText = cart.reduce((a,b) => a + b.qty, 0);
+        const container = document.getElementById('cartItemsContainer');
+        const total = cart.reduce((a,b) => a + (b.price * b.qty), 0);
+        document.getElementById('cartTotal').innerText = formatRupiah(total);
+
+        if (cart.length === 0) {
+            container.innerHTML = `<p style="text-align:center;color:#999;padding:20px;">Keranjang Anda masih kosong.</p>`;
+        } else {
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <div style="font-weight:600;font-size:0.9rem;">${item.name}</div>
+                        <div style="color:#FF8C00;font-size:0.8rem;">Rp ${formatRupiah(item.price)}</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <button onclick="changeQty(${item.id},-1)" style="width:25px;cursor:pointer;border:1px solid #ddd;border-radius:5px;background:#f5f5f5;">-</button>
+                        <span>${item.qty}</span>
+                        <button onclick="changeQty(${item.id},1)" style="width:25px;cursor:pointer;border:1px solid #ddd;border-radius:5px;background:#f5f5f5;">+</button>
                     </div>
                 </div>
             `).join('');
         }
+    }
 
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const item = cart.find(i => i.id === id);
-            if(item) item.qty++; else cart.push({...product, qty: 1});
-            updateUI();
-            Swal.fire({ icon: 'success', title: 'Berhasil!', text: product.name + ' masuk keranjang.', timer: 1000, showConfirmButton: false });
+    function changeQty(id, delta) {
+        const item = cart.find(i => i.id === id);
+        if (item) {
+            item.qty += delta;
+            if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
         }
+        updateUI();
+    }
 
-        function updateUI() {
-            document.getElementById('cartCount').innerText = cart.reduce((a,b) => a + b.qty, 0);
-            const container = document.getElementById('cartItemsContainer');
-            const total = cart.reduce((a,b) => a + (b.price * b.qty), 0);
-            document.getElementById('cartTotal').innerText = formatRupiah(total);
+    function selectMethod(method, el) {
+        selectedMethod = method;
+        document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('active'));
+        el.classList.add('active');
+        const detail = document.getElementById('methodDetail');
+        if (method === 'transfer') detail.innerHTML = "Transfer ke <b>BCA 123-456-7890</b> a/n DAF Snack";
+        else detail.innerHTML = "Bayar tunai ke kurir saat barang sampai di rumah.";
+    }
 
-            if(cart.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#999; padding:20px;">Keranjang Anda masih kosong.</p>`;
-            } else {
-                container.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <div>
-                            <div style="font-weight:600; font-size:0.9rem;">${item.name}</div>
-                            <div style="color:#FF8C00; font-size:0.8rem;">Rp ${formatRupiah(item.price)}</div>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <button onclick="changeQty(${item.id},-1)" style="width:25px; cursor:pointer;">-</button>
-                            <span>${item.qty}</span>
-                            <button onclick="changeQty(${item.id},1)" style="width:25px; cursor:pointer;">+</button>
-                        </div>
+    function openCart()  { document.getElementById('cartModal').style.display = 'flex'; }
+    function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
+    window.onclick = (e) => { if (e.target.id === 'cartModal') closeCart(); };
+
+    /* ==================== PROSES PEMBAYARAN ==================== */
+    function processRealPayment() {
+        const name  = document.getElementById('custName').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+        const addr  = document.getElementById('custAddress').value.trim();
+
+        if (cart.length === 0)       return Swal.fire('Oops!', 'Keranjang masih kosong.', 'error');
+        if (!name || !phone || !addr) return Swal.fire('Data Belum Lengkap', 'Mohon isi nama, nomor HP, dan alamat pengiriman.', 'warning');
+
+        if (selectedMethod === 'cod') {
+            // COD: langsung konfirmasi tanpa gateway bank
+            const total   = cart.reduce((a,b) => a + (b.price * b.qty), 0);
+            const orderId = 'DAF-' + Date.now();
+            Swal.fire({
+                title: 'Pesanan Terkonfirmasi!',
+                html: `
+                    <div style="text-align:left;font-size:0.85rem;background:#f4f4f4;padding:15px;border-radius:10px;">
+                        <p><b>Order ID:</b> ${orderId}</p>
+                        <p><b>Nama:</b> ${name}</p>
+                        <p><b>Metode:</b> COD (Bayar di Tempat)</p>
+                        <hr style="margin:10px 0">
+                        <p><b>Total Bayar:</b> Rp ${formatRupiah(total)}</p>
                     </div>
-                `).join('');
+                    <p style="margin-top:12px;font-size:0.8rem;color:green;">Pesanan sedang kami kemas & segera dikirim. Kami akan menghubungi via WhatsApp.</p>
+                `,
+                icon: 'success',
+                confirmButtonText: 'Selesai'
+            }).then(() => {
+                cart = [];
+                updateUI();
+                closeCart();
+                clearForm();
+            });
+            return;
+        }
+
+        // Transfer Bank → buka gateway
+        closeCart();
+        openBankGateway();
+    }
+
+    /* ==================== BANK GATEWAY ==================== */
+    function openBankGateway() {
+        const name  = document.getElementById('custName').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+        const total = cart.reduce((a,b) => a + (b.price * b.qty), 0);
+        const orderId = 'DAF-' + Date.now();
+
+        // Simpan orderId untuk dipakai di receipt
+        window._gwOrderId = orderId;
+        window._gwTotal   = total;
+        window._gwName    = name;
+
+        // Rincian pesanan
+        const itemRows = cart.map(i =>
+            `<div class="gw-row">
+                <span class="gw-row-label">${i.name} x${i.qty}</span>
+                <span class="gw-row-val">Rp ${formatRupiah(i.price * i.qty)}</span>
+             </div>`
+        ).join('');
+
+        document.getElementById('gwOrderDetail').innerHTML = `
+            <div class="gw-row"><span class="gw-row-label">No. Pesanan</span><span class="gw-row-val">${orderId}</span></div>
+            <div class="gw-row"><span class="gw-row-label">Rekening Debit</span><span class="gw-row-val">****-****-3812 (${name})</span></div>
+            <div class="gw-row"><span class="gw-row-label">Rekening Tujuan</span><span class="gw-row-val">BCA 123-456-7890 (DAF Snack)</span></div>
+            <div style="margin-top:10px;font-size:12px;color:#888;margin-bottom:4px;">Rincian Item:</div>
+            ${itemRows}
+        `;
+
+        document.getElementById('gwTotalVal').innerText = 'Rp ' + formatRupiah(total);
+
+        // Masking nomor HP
+        const masked = phone.length >= 8
+            ? phone.slice(0,4) + '-****-' + phone.slice(-4)
+            : '****-****-xxxx';
+        document.getElementById('gwMaskedPhone').innerText = masked;
+
+        // Buat input OTP
+        let otpHtml = '';
+        for (let i = 1; i <= 6; i++) {
+            otpHtml += `<input id="gwOtp${i}" type="text" inputmode="numeric" maxlength="1"
+                oninput="gwNextOtp(this,${i})" onkeydown="gwOtpKeydown(event,${i})">`;
+        }
+        document.getElementById('otpInputsContainer').innerHTML = otpHtml;
+
+        gwGoStep(1);
+        document.getElementById('bankGatewayModal').style.display = 'flex';
+    }
+
+    function closeBankGateway() {
+        clearInterval(gwOtpInterval);
+        document.getElementById('bankGatewayModal').style.display = 'none';
+        // Kembalikan modal keranjang jika pembatalan di step 1
+        openCart();
+    }
+
+    function gwGoStep(n) {
+        document.querySelectorAll('.gw-step').forEach(s => s.classList.remove('active'));
+        const el = document.getElementById('gw-step' + n);
+        if (el) el.classList.add('active');
+
+        if (n === 2) gwStartOtpTimer();
+        else if (n !== 2) clearInterval(gwOtpInterval);
+    }
+
+    function gwStartOtpTimer() {
+        clearInterval(gwOtpInterval);
+        let seconds = 299;
+        const el = document.getElementById('gwOtpTimer');
+        el.textContent = '04:59';
+        gwOtpInterval = setInterval(() => {
+            seconds--;
+            if (seconds <= 0) {
+                clearInterval(gwOtpInterval);
+                el.textContent = '00:00';
+                el.style.color = '#dc3545';
+                return;
             }
+            const m = Math.floor(seconds / 60).toString().padStart(2,'0');
+            const s = (seconds % 60).toString().padStart(2,'0');
+            el.textContent = m + ':' + s;
+        }, 1000);
+    }
+
+    function gwNextOtp(el, index) {
+        el.value = el.value.replace(/[^0-9]/g, '');
+        if (el.value.length === 1 && index < 6) {
+            document.getElementById('gwOtp' + (index + 1)).focus();
+        }
+    }
+
+    function gwOtpKeydown(e, index) {
+        if (e.key === 'Backspace' && !e.target.value && index > 1) {
+            document.getElementById('gwOtp' + (index - 1)).focus();
+        }
+    }
+
+    function gwVerifyOtp() {
+        let code = '';
+        for (let i = 1; i <= 6; i++) {
+            code += (document.getElementById('gwOtp' + i).value || '');
         }
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if(item) {
-                item.qty += delta;
-                if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
+        if (code.length < 6) {
+            Swal.fire('OTP Tidak Lengkap', 'Masukkan 6 digit kode OTP yang telah dikirim ke nomor Anda.', 'warning');
+            return;
+        }
+
+        clearInterval(gwOtpInterval);
+        gwGoStep(3);
+
+        // Animasi langkah-langkah proses
+        const steps = ['ps1','ps2','ps3','ps4','ps5'];
+        const titles = [
+            'Menghubungkan ke server BCA...',
+            'Memverifikasi identitas nasabah...',
+            'Memproses transfer dana...',
+            'Mengkonfirmasi pembayaran ke merchant...',
+            'Menyimpan bukti transaksi...'
+        ];
+
+        let idx = 0;
+        document.getElementById('gwProcTitle').textContent = titles[0];
+        document.getElementById('ps1').classList.add('active-step');
+
+        const interval = setInterval(() => {
+            // Tandai step sebelumnya sebagai done
+            document.getElementById(steps[idx]).classList.remove('active-step');
+            document.getElementById(steps[idx]).classList.add('done');
+            document.getElementById(steps[idx]).querySelector('.step-dot').textContent = '✓';
+
+            idx++;
+
+            if (idx < steps.length) {
+                document.getElementById(steps[idx]).classList.add('active-step');
+                document.getElementById('gwProcTitle').textContent = titles[idx];
+            } else {
+                clearInterval(interval);
+                setTimeout(() => gwShowSuccess(), 600);
             }
-            updateUI();
-        }
+        }, 900);
+    }
 
-        function selectMethod(method, el) {
-            selectedMethod = method;
-            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('active'));
-            el.classList.add('active');
-            
-            const detail = document.getElementById('methodDetail');
-            if(method === 'transfer') detail.innerHTML = "Transfer ke <b>BCA 123-456-7890</b> a/n DAF Snack";
-            else detail.innerHTML = "Bayar tunai ke kurir saat barang sampai di rumah.";
-        }
+    function gwShowSuccess() {
+        const now     = new Date();
+        const pad     = n => n.toString().padStart(2,'0');
+        const timeStr = pad(now.getDate())+'/'+pad(now.getMonth()+1)+'/'+now.getFullYear()+
+                        ' '+pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+        const refNo   = 'TRX' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) +
+                        '-' + Math.floor(1000 + Math.random() * 9000);
 
-        function processRealPayment() {
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const addr = document.getElementById('custAddress').value;
+        document.getElementById('gwReceiptDetail').innerHTML = `
+            <div class="gw-receipt-row"><span class="gw-receipt-label">No. Referensi</span><span class="gw-receipt-val blue">${refNo}</span></div>
+            <div class="gw-receipt-row"><span class="gw-receipt-label">Waktu Transaksi</span><span class="gw-receipt-val">${timeStr}</span></div>
+            <div class="gw-receipt-row"><span class="gw-receipt-label">Nama Penerima</span><span class="gw-receipt-val">${window._gwName}</span></div>
+            <div class="gw-receipt-row"><span class="gw-receipt-label">No. Pesanan</span><span class="gw-receipt-val">${window._gwOrderId}</span></div>
+            <div class="gw-receipt-row"><span class="gw-receipt-label">Rekening Tujuan</span><span class="gw-receipt-val">BCA 123-456-7890</span></div>
+            <div class="gw-receipt-row" style="border-top:2px solid #ddd; margin-top:4px; padding-top:10px;">
+                <span class="gw-receipt-label" style="font-weight:700; color:#1a1a1a; font-size:14px;">Total Dibayar</span>
+                <span class="gw-receipt-val" style="font-size:16px; color:#003d7a;">Rp ${formatRupiah(window._gwTotal)}</span>
+            </div>
+        `;
 
-            if(cart.length === 0) return Swal.fire('Oops!', 'Keranjang masih kosong.', 'error');
-            if(!name || !phone || !addr) return Swal.fire('Data Belum Lengkap', 'Mohon isi nama, nomor HP, dan alamat pengiriman.', 'warning');
+        gwGoStep(4);
+    }
 
-            // Simulasi Proses Bank
-            document.getElementById('loadingOverlay').style.display = 'flex';
-            
-            setTimeout(() => {
-                document.getElementById('loadingText').innerText = "Memverifikasi Pembayaran...";
-            }, 1500);
+    function gwFinish() {
+        clearInterval(gwOtpInterval);
+        document.getElementById('bankGatewayModal').style.display = 'none';
+        cart = [];
+        updateUI();
+        clearForm();
+        Swal.fire({
+            icon: 'success',
+            title: 'Terima Kasih!',
+            text: 'Pesanan Anda sedang kami kemas dan segera dikirim. Notifikasi akan dikirim melalui WhatsApp.',
+            confirmButtonText: 'Oke, Mengerti'
+        });
+    }
 
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                
-                // Invoice / Receipt
-                const total = cart.reduce((a,b) => a + (b.price * b.qty), 0);
-                Swal.fire({
-                    title: 'Pembayaran Berhasil!',
-                    html: `
-                        <div style="text-align:left; font-size:0.85rem; background:#f4f4f4; padding:15px; border-radius:10px;">
-                            <p><b>Order ID:</b> DAF-${Date.now()}</p>
-                            <p><b>Nama:</b> ${name}</p>
-                            <p><b>Metode:</b> ${selectedMethod.toUpperCase()}</p>
-                            <hr style="margin:10px 0">
-                            <p><b>Total Bayar:</b> Rp ${formatRupiah(total)}</p>
-                        </div>
-                        <p style="margin-top:15px; font-size:0.8rem; color:green;">Pesanan sedang kami kemas & segera dikirim.
-                            Jika pesanan anda sudah dekat kami akan memberitahukan melalui pesan WhatsApp!</p>
-                    `,
-                    icon: 'success',
-                    confirmButtonText: 'Selesai'
-                }).then(() => {
-                    cart = [];
-                    updateUI();
-                    closeCart();
-                    document.getElementById('custName').value = "";
-                    document.getElementById('custPhone').value = "";
-                    document.getElementById('custAddress').value = "";
-                });
+    /* ==================== HELPERS ==================== */
+    function clearForm() {
+        ['custName','custPhone','custAddress'].forEach(id => document.getElementById(id).value = '');
+    }
 
-            }, 3500);
-        }
+    function formatRupiah(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
 
-        function formatRupiah(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-        function openCart() { document.getElementById('cartModal').style.display = 'flex'; }
-        function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
-        window.onclick = (e) => { if(e.target.id === 'cartModal') closeCart(); }
-        
-        renderProducts();
-    </script>
+    renderProducts();
+</script>
 </body>
 </html>
